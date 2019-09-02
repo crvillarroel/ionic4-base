@@ -1,0 +1,30 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>
+      {{ 'WELCOME_TITLE' | translate }} (App Name)
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content padding>
+  <span class="logo"></span>
+  <div>
+    <ion-button expand="block" id="signInFacebook" (click)="signInFacebook()">
+      Facebook {{ 'LOGIN' | translate }}
+      <ion-icon slot="end" name="logo-facebook"></ion-icon>
+    </ion-button>
+    <p></p>
+    <ion-button expand="block" id="signInGoogle" color="danger" (click)="signInGoogle()">
+      Google {{ 'LOGIN' | translate }}
+      <ion-icon slot="end" name="logo-google"></ion-icon>
+    </ion-button>
+    <p></p>
+    <ion-button expand="block" routerLink="/login" id="signIn">
+      {{ 'LOGIN' | translate }} (App Name)
+    </ion-button>
+    <p>{{ 'NO_ACCOUNT_MESSAGE' | translate }}</p>
+    <ion-button expand="block" routerLink="/signup">
+      {{ 'SIGNUP' | translate }} (App Name)
+    </ion-button>
+  </div>
+</ion-content>

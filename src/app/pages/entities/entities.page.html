@@ -1,0 +1,45 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>
+      {{ 'TAB2_TITLE' | translate }} {{ username }}
+    </ion-title>
+    <ion-buttons end>
+      <button *ngIf="!isLoggedIn" ion-button icon-only (click)="goToLogin()">
+        <ion-icon name="key"></ion-icon>
+      </button>
+      <button *ngIf="isLoggedIn" ion-button icon-only (click)="goToLogout()">
+        <ion-icon name="exit"></ion-icon>
+      </button>
+      <button *ngIf="isLoggedIn" ion-button icon-only (click)="goToAdd()">
+        <ion-icon name="add"></ion-icon>
+      </button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-list>
+      <ion-item *ngFor="let entity of entities" (click)="openPage(entity)">
+        <h2>{{entity.name}}</h2>
+      </ion-item>
+  </ion-list>
+
+  <ion-refresher (ionRefresh)="refresh($event)">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
+  <ion-list>
+    <ion-item-sliding *ngFor="let entity of entities">
+      <ion-item>
+        <ion-label>{{ entity.name }}</ion-label>
+        <ion-checkbox *ngIf="isLoggedIn" [ngModel]="entity.done" (ionChange)="toggle(entity)"></ion-checkbox>
+        <ion-badge item-end>{{ entity.measure }}</ion-badge>
+      </ion-item>
+      <ion-item-options *ngIf="isLoggedIn">
+        <button ion-button (click)="delete(entity)" color="danger">Delete</button>
+      </ion-item-options>
+    </ion-item-sliding>
+    <ion-item *ngIf="entities.length === 0">
+      {{ 'EMPTY_ENTITIES_MESSAGE' | translate }}
+    </ion-item>
+  </ion-list>
+</ion-content>
