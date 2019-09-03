@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { NavController } from '@ionic/angular';
 import { AccountService } from 'src/app/services/auth/account.service';
-import { LoginService } from 'src/app/services/login/login.service';
 import { Account } from 'src/model/account.model';
 
 @Component({
@@ -12,30 +11,24 @@ import { Account } from 'src/model/account.model';
 export class HomePage implements OnInit {
   account: Account;
 
-  constructor(public navController: NavController, private accountService: AccountService, private loginService: LoginService) {}
+  constructor(public navController: NavController, private accountService: AccountService) {}
 
   ngOnInit() {
-    this.account = new Account(
-      null, null, null, "Usuario de ejemplo", null, null, null, null
-    );
-    
-    /*
     this.accountService.identity().then(account => {
       if (account === null) {
         this.goBackToHomePage();
       } else {
         this.account = account;
       }
-    });*/
+    });
   }
 
   isAuthenticated() {
-    return true;
-    //return this.accountService.isAuthenticated();
+    return this.accountService.isAuthenticated();
   }
 
   logout() {
-    this.loginService.logout();
+    this.accountService.logout();
     this.goBackToHomePage();
   }
 

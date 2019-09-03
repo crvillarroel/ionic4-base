@@ -6,4 +6,32 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content></ion-content>
+<ion-content>
+  <ion-list>
+    <ion-item>
+      <ion-avatar>
+        <img [src]="account.imageUrl" />
+      </ion-avatar>
+    </ion-item>
+    <ion-item>
+      <ion-label>{{ 'USERNAME' | translate }}</ion-label>
+      <ion-input type="string" [(ngModel)]="account.login" name="username"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label>{{ 'NAME' | translate }}</ion-label>
+      <ion-input type="string" [(ngModel)]="account.firstName" name="firstName"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label>{{ 'EMAIL' | translate }}</ion-label>
+      <ion-input type="string" [(ngModel)]="account.email" name="email"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label>{{ 'REMEMBER_ME' | translate }}</ion-label>
+      <ion-toggle [(ngModel)]="account.activated" name="rememberMe"></ion-toggle>
+    </ion-item>
+    <ion-item>
+        <ion-label>Prefered language</ion-label>
+        <ion-input type="string" [(ngModel)]="account.langKey" name="langKey"></ion-input>
+      </ion-item>
+  </ion-list>
+</ion-content>
