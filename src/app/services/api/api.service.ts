@@ -6,7 +6,7 @@ import { environment } from 'src/environments/environment';
   providedIn: 'root'
 })
 export class ApiService {
-  public static API_URL = environment.apiUrl;
+  public static API_URL = "";
 
   constructor(public http: HttpClient) {}
 

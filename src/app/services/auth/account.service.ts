@@ -2,7 +2,7 @@ import { HttpClient, HttpResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { SessionStorageService } from 'ngx-webstorage';
 import { Observable, Subject } from 'rxjs';
-import { first } from 'rxjs/operators';
+import { first, map } from 'rxjs/operators';
 import { Account } from '../../../model/account.model';
 import { ApiService } from '../api/api.service';
 import { AngularFireAuth } from '@angular/fire/auth';
@@ -173,6 +173,17 @@ export class AccountService {
   isAuthenticated(): boolean {
     return this.authenticated;
   }
+
+  /**
+   * The current user is Logged in
+   */
+  isLoggedIn(): Promise<boolean> {
+    return this.afAuth.authState
+      .pipe(
+        first(),
+        map(user => (user)? true: false)
+      ).toPromise();
+ }
 
   isIdentityResolved(): boolean {
     return this.userIdentity !== undefined;

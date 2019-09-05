@@ -3,7 +3,7 @@
     <ion-title>
       {{ 'WELCOME_TITLE' | translate }}, {{account?.firstName}}
     </ion-title>
-    <ion-buttons slot="end">
+    <ion-buttons *ngIf="isAuthenticated()" slot="end">
       <ion-button (click)="logout()" id="logout">
         {{ 'LOGOUT_TITLE' | translate }}
         <ion-icon slot="end" name="log-out"></ion-icon>

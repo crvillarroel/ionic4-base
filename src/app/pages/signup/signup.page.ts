@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { NavController, ToastController, LoadingController } from '@ionic/angular';
 import { TranslateService } from '@ngx-translate/core';
-import { UserService } from 'src/app/services/user/user.service';
 import { AngularFireAuth } from '@angular/fire/auth';
 
 @Component({
@@ -37,7 +36,6 @@ export class SignupPage implements OnInit {
 
   constructor(
     public navCtrl: NavController,
-    public userService: UserService,
     public toastCtrl: ToastController,
     public translateService: TranslateService,
     private loadingCtrl: LoadingController,
@@ -60,43 +58,6 @@ export class SignupPage implements OnInit {
   }
 
   ngOnInit() {}
-
-  doSignup() {
-    // set login to same as email
-    this.account.login = this.account.email;
-    // Attempt to login in through our User service
-    this.userService.signup(this.account).subscribe(
-      async () => {
-        const toast = await this.toastCtrl.create({
-          message: this.signupSuccessString,
-          duration: 3000,
-          position: 'top'
-        });
-        toast.present();
-      },
-      async response => {
-        // Unable to sign up
-        const error = JSON.parse(response.error);
-        let displayError = this.signupErrorString;
-        if (response.status === 400 && error.type.includes('already-used')) {
-          displayError = this.existingUserError;
-        } else if (
-          response.status === 400 &&
-          error.message === 'error.validation' &&
-          error.fieldErrors[0].field === 'password' &&
-          error.fieldErrors[0].message === 'Size'
-        ) {
-          displayError = this.invalidPasswordError;
-        }
-        const toast = await this.toastCtrl.create({
-          message: displayError,
-          duration: 3000,
-          position: 'middle'
-        });
-        toast.present();
-      }
-    );
-  }
 
   signUpWithEmail() {
     console.log('SignupPage.signUpWithEmail');

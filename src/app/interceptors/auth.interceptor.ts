@@ -1,26 +1,41 @@
 import { HttpEvent, HttpHandler, HttpInterceptor, HttpRequest } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { LocalStorageService, SessionStorageService } from 'ngx-webstorage';
 import { Observable } from 'rxjs';
-import { ApiService } from '../services/api/api.service';
+import { AngularFireAuth } from '@angular/fire/auth';
+import { environment } from '../../environments/environment'
 
 @Injectable()
 export class AuthInterceptor implements HttpInterceptor {
-  private servicesEndpoint = ApiService.API_URL.replace('api', 'services');
+  private servicesEndpoint = environment.graphql.apiUrl;
+  private token: string = null;
 
-  constructor(private localStorage: LocalStorageService, private sessionStorage: SessionStorageService) {}
+  constructor(private afAuth: AngularFireAuth) {
+    this.afAuth.auth.onAuthStateChanged(async (user) => {
+      //TODO move to this.onAuthStateChanged function
+      console.log('AuthInterceptor.contructor.afAuth.auth.onAuthStateChanged', user);
+      
+      if (user) {       
+        user.getIdToken(true).then((token) => {
+          console.log('AuthInterceptor.contructor.afAuth.auth.onAuthStateChanged.user.getIdToken');
+
+          this.token = token;
+        });
+      } else {
+        this.token = null;
+      }
+    });
+  }
 
   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     if (!request || !request.url || (/^http/.test(request.url) &&
-      !request.url.startsWith(ApiService.API_URL) && !request.url.startsWith(this.servicesEndpoint))) {
+        !request.url.startsWith(this.servicesEndpoint))) {
       return next.handle(request);
     }
 
-    const token = this.localStorage.retrieve('authenticationToken') || this.sessionStorage.retrieve('authenticationToken');
-    if (!!token) {
+    if (this.token) {
       request = request.clone({
         setHeaders: {
-          Authorization: 'Bearer ' + token
+          Authorization: 'Bearer ' + this.token
         }
       });
     }

@@ -1,6 +1,5 @@
 export const environment = {
   production: false,
-  apiUrl: 'http://localhost:8080/api',
   graphql: {
     apiUrl: 'https://healthymode.herokuapp.com/v1alpha1/graphql',
     wsUrl: 'ws://healthymode.herokuapp.com/v1alpha1/graphql',

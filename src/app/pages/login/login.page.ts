@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { NavController, ToastController, LoadingController } from '@ionic/angular';
 import { FormGroup, Validators, FormControl } from '@angular/forms';
 import { TranslateService } from '@ngx-translate/core';
-import { LoginService } from 'src/app/services/login/login.service';
 import { AngularFireAuth } from '@angular/fire/auth';
 
 @Component({
@@ -28,7 +27,6 @@ export class LoginPage implements OnInit {
     private loadingCtrl: LoadingController,
     public navCtrl: NavController,
     public translateService: TranslateService,
-    public loginService: LoginService,
     private afAuth: AngularFireAuth
   ) {
     console.log('LoginPage.constructor');

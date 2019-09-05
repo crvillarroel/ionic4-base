@@ -1,0 +1,29 @@
+{
+    "fluentMethods": true,
+    "relationships": [],
+    "fields": [
+        {
+            "fieldName": "name",
+            "fieldType": "String",
+            "fieldValidateRules": [
+                "required",
+                "maxlength"
+            ],
+            "fieldValidateRulesMaxlength": 20
+        },
+        {
+            "fieldName": "measure",
+            "fieldType": "Integer"
+        },
+        {
+            "fieldName": "categoryId",
+            "fieldType": "Integer"
+        }
+    ],
+    "changelogDate": "20190903132956",
+    "dto": "no",
+    "service": "no",
+    "entityTableName": "product",
+    "jpaMetamodelFiltering": false,
+    "pagination": "infinite-scroll"
+}

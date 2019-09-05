@@ -16,7 +16,8 @@ export class HomePage implements OnInit {
   ngOnInit() {
     this.accountService.identity().then(account => {
       if (account === null) {
-        this.goBackToHomePage();
+        //TODO If you want the welcome page always, even when the user is not logged in
+        //this.goBackToWelcomePage();
       } else {
         this.account = account;
       }
@@ -29,10 +30,10 @@ export class HomePage implements OnInit {
 
   logout() {
     this.accountService.logout();
-    this.goBackToHomePage();
+    this.goBackToWelcomePage();
   }
 
-  private goBackToHomePage(): void {
-    this.navController.navigateBack('');
+  private goBackToWelcomePage(): void {
+    this.navController.navigateBack('/welcome');
   }
 }
