@@ -581,14 +581,13 @@ export type CategoryByPkQueryVariables = {
 
 export type CategoryByPkQuery = (
   { __typename?: 'query_root' }
-  & { category_by_pk: Maybe<(
+  & { category: Maybe<(
     { __typename?: 'category' }
     & Pick<Category, 'id' | 'name' | 'description'>
   )> }
 );
 
 export type InsertCategoryMutationVariables = {
-  id: Scalars['Int'],
   name: Scalars['String'],
   description: Scalars['String']
 };
@@ -649,7 +648,7 @@ export const AllCategoriesDocument = gql`
   }
 export const CategoryByPkDocument = gql`
     query CategoryByPk($id: Int!) {
-  category_by_pk(id: $id) {
+  category: category_by_pk(id: $id) {
     id
     name
     description
@@ -665,8 +664,8 @@ export const CategoryByPkDocument = gql`
     
   }
 export const InsertCategoryDocument = gql`
-    mutation InsertCategory($id: Int!, $name: String!, $description: String!) {
-  insert_category(objects: {id: $id, name: $name, description: $description}) {
+    mutation InsertCategory($name: String!, $description: String!) {
+  insert_category(objects: {name: $name, description: $description}) {
     affected_rows
   }
 }

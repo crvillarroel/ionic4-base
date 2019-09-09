@@ -6,12 +6,14 @@ import { Routes, RouterModule, Resolve, ActivatedRouteSnapshot, RouterStateSnaps
 import { UserRouteAccessService } from '../../../services/auth/user-route-access.service';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { Observable, of } from 'rxjs';
-import { HttpResponse } from '@angular/common/http';
 import { filter, map } from 'rxjs/operators';
 
 import { CategoryPage } from './category';
 import { CategoryUpdatePage } from './category-update';
 import { Category, CategoryService, CategoryDetailPage } from '.';
+
+import { ApolloQueryResult } from 'apollo-client';
+import { CategoryByPkQuery } from 'src/app/services/graphql/graphql.service';
 
 @Injectable({ providedIn: 'root' })
 export class CategoryResolve implements Resolve<Category> {
@@ -21,8 +23,9 @@ export class CategoryResolve implements Resolve<Category> {
     const id = route.params.id ? route.params.id : null;
     if (id) {
       return this.service.find(id).pipe(
-        filter((response: HttpResponse<Category>) => response.ok),
-        map((category: HttpResponse<Category>) => category.body)
+        filter((response: ApolloQueryResult<CategoryByPkQuery>) => !response.loading),
+        //FIXME There should be a better way
+        map((result: ApolloQueryResult<CategoryByPkQuery>) => result.data.category_by_pk .data.category && result.data.product[0])
       );
     }
     return of(new Category());

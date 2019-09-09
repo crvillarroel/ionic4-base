@@ -7,7 +7,7 @@ query AllCategories {
 }
 
 query CategoryByPk($id: Int!) {
-  category_by_pk(id: $id) {
+  category: category_by_pk(id: $id) {
     id
     name
     description
