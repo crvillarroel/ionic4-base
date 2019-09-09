@@ -1,0 +1,33 @@
+query Categories {
+  categories: category(order_by: {id: asc}) {
+    id
+    name
+    description
+  }
+}
+
+query CategoryByPk($id: Int!) {
+  category_by_pk(id: $id) {
+    id
+    name
+    description
+  }
+}
+
+mutation InsertCategory($id: Int!, $name: String!) {
+  insert_category(objects: {id: $id, name: $name}) {
+    affected_rows
+  }
+}
+
+mutation UpdateCategory($id: Int!, $name: String!) {
+  update_category(where: {id: {_eq: $id}, name: {_eq: $name}}) {
+    affected_rows
+  }
+}
+
+mutation DeleteCategory($id: Int!) {
+  delete_category(where: {id: {_eq: $id}}) {
+    affected_rows
+  }
+}
