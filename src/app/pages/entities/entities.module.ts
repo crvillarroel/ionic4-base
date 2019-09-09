@@ -20,6 +20,10 @@ const routes: Routes = [
     path: 'product',
     loadChildren: './product/product.module#ProductPageModule'
   }
+  , {
+    path: 'category',
+    loadChildren: './category/category.module#CategoryPageModule'
+  }
   /* jhipster-needle-add-entity-route - JHipster will add entity modules routes here */
 ];
 
