@@ -1,4 +1,4 @@
-query Categories {
+query AllCategories {
   categories: category(order_by: {id: asc}) {
     id
     name
@@ -14,14 +14,14 @@ query CategoryByPk($id: Int!) {
   }
 }
 
-mutation InsertCategory($id: Int!, $name: String!) {
-  insert_category(objects: {id: $id, name: $name}) {
+mutation InsertCategory($name: String!, $description: String!) {
+  insert_category(objects: {name: $name, description: $description}) {
     affected_rows
   }
 }
 
-mutation UpdateCategory($id: Int!, $name: String!) {
-  update_category(where: {id: {_eq: $id}, name: {_eq: $name}}) {
+mutation UpdateCategory($id: Int!, $name: String!, $description: String!) {
+  update_category(where: {id: {_eq: $id}}, _set: {name: $name, description: $description}) {
     affected_rows
   }
 }

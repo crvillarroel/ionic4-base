@@ -30,7 +30,7 @@ export type Boolean_Comparison_Exp = {
 /** columns and relationships of "category" */
 export type Category = {
    __typename?: 'category',
-  description: Scalars['String'],
+  description?: Maybe<Scalars['String']>,
   id: Scalars['Int'],
   name: Scalars['String'],
 };
@@ -563,10 +563,10 @@ export type Text_Comparison_Exp = {
   _nsimilar?: Maybe<Scalars['String']>,
   _similar?: Maybe<Scalars['String']>,
 };
-export type CategoriesQueryVariables = {};
+export type AllCategoriesQueryVariables = {};
 
 
-export type CategoriesQuery = (
+export type AllCategoriesQuery = (
   { __typename?: 'query_root' }
   & { categories: Array<(
     { __typename?: 'category' }
@@ -589,7 +589,8 @@ export type CategoryByPkQuery = (
 
 export type InsertCategoryMutationVariables = {
   id: Scalars['Int'],
-  name: Scalars['String']
+  name: Scalars['String'],
+  description: Scalars['String']
 };
 
 
@@ -603,7 +604,8 @@ export type InsertCategoryMutation = (
 
 export type UpdateCategoryMutationVariables = {
   id: Scalars['Int'],
-  name: Scalars['String']
+  name: Scalars['String'],
+  description: Scalars['String']
 };
 
 
@@ -628,8 +630,8 @@ export type DeleteCategoryMutation = (
   )> }
 );
 
-export const CategoriesDocument = gql`
-    query Categories {
+export const AllCategoriesDocument = gql`
+    query AllCategories {
   categories: category(order_by: {id: asc}) {
     id
     name
@@ -641,8 +643,8 @@ export const CategoriesDocument = gql`
   @Injectable({
     providedIn: 'root'
   })
-  export class CategoriesGQL extends Apollo.Query<CategoriesQuery, CategoriesQueryVariables> {
-    document = CategoriesDocument;
+  export class AllCategoriesGQL extends Apollo.Query<AllCategoriesQuery, AllCategoriesQueryVariables> {
+    document = AllCategoriesDocument;
     
   }
 export const CategoryByPkDocument = gql`
@@ -663,8 +665,8 @@ export const CategoryByPkDocument = gql`
     
   }
 export const InsertCategoryDocument = gql`
-    mutation InsertCategory($id: Int!, $name: String!) {
-  insert_category(objects: {id: $id, name: $name}) {
+    mutation InsertCategory($id: Int!, $name: String!, $description: String!) {
+  insert_category(objects: {id: $id, name: $name, description: $description}) {
     affected_rows
   }
 }
@@ -678,8 +680,8 @@ export const InsertCategoryDocument = gql`
     
   }
 export const UpdateCategoryDocument = gql`
-    mutation UpdateCategory($id: Int!, $name: String!) {
-  update_category(where: {id: {_eq: $id}, name: {_eq: $name}}) {
+    mutation UpdateCategory($id: Int!, $name: String!, $description: String!) {
+  update_category(where: {id: {_eq: $id}}, _set: {name: $name, description: $description}) {
     affected_rows
   }
 }
